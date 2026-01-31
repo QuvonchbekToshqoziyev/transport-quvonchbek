@@ -1,10 +1,2 @@
 node_modules/
 .env
-logs/*.txt
-logs/*.log
-src/uploads/*
-!src/uploads/.gitkeep
-uploads/*
-!uploads/.gitkeep
-!logs/.gitkeep
-src/database/otp.json
