@@ -20,10 +20,18 @@ class StaffService{
         }
     }
 
-    async getAll(){
-        const data = await pool.query("SELECT id, branch, username, birth_date, gender, role, created_at FROM staffs")
+    async getAll(branchFilter = null){
+        let query = "SELECT id, branch, username, birth_date, gender, role, created_at FROM staffs";
+        const values = [];
+        
+        if (branchFilter !== null) {
+            query += " WHERE branch = $1";
+            values.push(branchFilter);
+        }
+        
+        const data = await pool.query(query, values);
         if (data.rows.length === 0) {
-            throw new NotFoundError(404, "No staff found")
+            throw new NotFoundError(404, "No staff found");
         }
         return{
             status:200,
@@ -32,7 +40,7 @@ class StaffService{
         }
     }
 
-    async search(query){
+    async search(query, branchFilter = null){
         const { username, branch } = query;
         
         let sql = "SELECT id, branch, username, email, birth_date, gender, role, created_at FROM staffs WHERE 1=1";
@@ -50,6 +58,12 @@ class StaffService{
             values.push(branch);
             paramCount++;
         }
+        
+        if (branchFilter !== null) {
+            sql += ` AND branch = $${paramCount}`;
+            values.push(branchFilter);
+            paramCount++;
+        }
 
         const data = await pool.query(sql, values);
         
@@ -60,10 +74,18 @@ class StaffService{
         };
     }
 
-    async getOne(id){
-        const data = await pool.query("SELECT id, branch, username, birth_date, gender, role, created_at FROM staffs WHERE id=$1",[id])
+    async getOne(id, branchFilter = null){
+        let query = "SELECT id, branch, username, birth_date, gender, role, created_at FROM staffs WHERE id=$1";
+        const values = [id];
+        
+        if (branchFilter !== null) {
+            query += " AND branch = $2";
+            values.push(branchFilter);
+        }
+        
+        const data = await pool.query(query, values);
         if (!data.rows[0]) {
-            throw new NotFoundError(404, "Staff not found")
+            throw new NotFoundError(404, "Staff not found or access denied");
         }
         return{
             status:200,
@@ -89,7 +111,7 @@ class StaffService{
             data: data.rows[0]
         }
     }
-    async put(id, body){
+    async put(id, body, branchFilter = null){
         const fields = ['branch', 'username', 'password', 'birth_date', 'gender']
         const updates = []
         const values = []
@@ -112,10 +134,18 @@ class StaffService{
         }
 
         values.push(id)
-        const query = `UPDATE staffs SET ${updates.join(', ')} WHERE id=$${paramCount} RETURNING id, branch, username, birth_date, gender, role, created_at`
-        const data = await pool.query(query, values)
+        let query = `UPDATE staffs SET ${updates.join(', ')} WHERE id=$${paramCount}`;
+        
+        if (branchFilter !== null) {
+            paramCount++;
+            query += ` AND branch=$${paramCount}`;
+            values.push(branchFilter);
+        }
+        
+        query += " RETURNING id, branch, username, birth_date, gender, role, created_at";
+        const data = await pool.query(query, values);
         if (!data.rows[0]) {
-            throw new NotFoundError(404, "Staff not found")
+            throw new NotFoundError(404, "Staff not found or access denied");
         }
         return{
             status:200,
@@ -123,10 +153,19 @@ class StaffService{
             data: data.rows[0]
         }
     }
-    async delete(id){
-        const data = await pool.query("DELETE FROM staffs WHERE id=$1 RETURNING id, branch, username, birth_date, gender, role",[id])
+    async delete(id, branchFilter = null){
+        let query = "DELETE FROM staffs WHERE id=$1";
+        const values = [id];
+        
+        if (branchFilter !== null) {
+            query += " AND branch=$2";
+            values.push(branchFilter);
+        }
+        
+        query += " RETURNING id, branch, username, birth_date, gender, role";
+        const data = await pool.query(query, values);
         if (!data.rows[0]) {
-            throw new NotFoundError(404, "Staff not found")
+            throw new NotFoundError(404, "Staff not found or access denied");
         }
         
         return{

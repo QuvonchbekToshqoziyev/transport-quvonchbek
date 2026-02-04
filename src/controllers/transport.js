@@ -40,36 +40,41 @@ class TransportController {
 
     async create(req, res, next) {
         try {
-            const body = { ...req.body }
+            const body = { ...req.body };
             if (req.file) {
-                body.img = req.file.filename
+                body.img = req.file.filename;
             }
-            const data = await transportService.create(body)
+            if (req.branchScopeRequired) {
+                body.branch = req.user.branch;
+            }
+            const data = await transportService.create(body);
             return res.status(data.status).json(data);
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
 
     async put(req, res, next) {
         try {
-            const body = { ...req.body }
+            const body = { ...req.body };
             if (req.file) {
-                body.img = req.file.filename
+                body.img = req.file.filename;
             }
-            const data = await transportService.put(req.params.id, body)
+            const branchFilter = req.branchScopeRequired ? req.user.branch : null;
+            const data = await transportService.put(req.params.id, body, branchFilter);
             return res.status(data.status).json(data);
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
 
     async delete(req, res, next) {
         try {
-            const data = await transportService.delete(req.params.id)
+            const branchFilter = req.branchScopeRequired ? req.user.branch : null;
+            const data = await transportService.delete(req.params.id, branchFilter);
             return res.status(data.status).json(data);
         } catch (error) {
-            next(error)
+            next(error);
         }
     }
 }

@@ -68,14 +68,14 @@ TRANSPORT SALE
 
 [Talablar]
     * Token -> Headers dan yuborilishi shart, ustunlik beradi [ip,user-agent]  headers.Authorizetion
-    * JsonWebToken
+    * JsonWebToken (utils/jwt.js)
     * Validation -> Joi
     * sha256, bcrypt, md5
-    * middleware
+    * middleware (middleware/auth.js, middleware/authorize.js)
     * Error Handler
     * winston logger
     * Custom Error
-    * checktoken
+    * Authentication & Authorization separated
     * baza mongodb atlas || elephantSql
     * postman share,
 

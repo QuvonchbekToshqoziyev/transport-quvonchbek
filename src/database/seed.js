@@ -15,8 +15,6 @@ const pool = new Pool({
 
 async function seed() {
     try {
-        console.log("🌱 Starting database seed...");
-
         const hashedPassword = await bcrypt.hash("password123", SALT_ROUNDS);
 
         await pool.query("DELETE FROM admins");
@@ -29,7 +27,6 @@ async function seed() {
         await pool.query("ALTER SEQUENCE staffs_id_seq RESTART WITH 1");
         await pool.query("ALTER SEQUENCE admins_id_seq RESTART WITH 1");
 
-        console.log("📦 Inserting branches...");
         await pool.query(`
             INSERT INTO branches (name, address) VALUES 
             ('Main Branch', '123 Main Street, Tashkent'),
@@ -37,7 +34,6 @@ async function seed() {
             ('South Branch', '789 South Road, Bukhara')
         `);
 
-        console.log("🚗 Inserting transports...");
         await pool.query(`
             INSERT INTO transports (branch, model, color, price) VALUES 
             (1, 'Lacetti', 'white', 15000.00),
@@ -52,7 +48,6 @@ async function seed() {
             (3, 'Equinox', 'blue', 35000.00)
         `);
 
-        console.log("👥 Inserting staff members...");
         await pool.query(`
             INSERT INTO staffs (branch, username, email, password, birth_date, gender, role) VALUES 
             (1, 'admin1', 'admin1@transport.com', $1, '1990-01-15', 'male', 'staff'),
@@ -62,7 +57,6 @@ async function seed() {
             (3, 'staff3', 'staff3@transport.com', $1, '1995-11-30', 'male', 'staff')
         `, [hashedPassword]);
 
-        console.log("🔐 Inserting admin permissions...");
         await pool.query(`
             INSERT INTO admins (staff, permission_model, permission) VALUES 
             (1, 'transports', '{create,read,update,delete}'),
@@ -76,19 +70,9 @@ async function seed() {
             (4, 'branches', '{read,update}')
         `);
 
-        console.log("\n✅ Database seeded successfully!");
-        console.log("\n📋 Test accounts (password: password123):");
-        console.log("  - admin1@transport.com (Branch 1, staff with transport CRUD + staff read)");
-        console.log("  - manager1@transport.com (Branch 1, branchmanager)");
-        console.log("  - staff2@transport.com (Branch 2, staff with transport read)");
-        console.log("  - manager2@transport.com (Branch 2, branchmanager)");
-        console.log("  - staff3@transport.com (Branch 3, regular staff)");
-        console.log("\n🔑 SuperAdmin: Use credentials from .env file");
-
         await pool.end();
         process.exit(0);
     } catch (error) {
-        console.error("❌ Seed error:", error.message);
         await pool.end();
         process.exit(1);
     }

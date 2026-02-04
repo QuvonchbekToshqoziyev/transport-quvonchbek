@@ -1,9 +1,9 @@
 import pool from "../database/config.js";
 import bcrypt from "bcrypt";
-import { generateAccessToken, generateRefreshToken } from "../access/access.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import { sendOTPEmail } from "../utils/email.js";
 import { findOTP, deleteOTP } from "../utils/otpStorage.js";
-import { NotFoundError, BadRequestError, UnauthorizedError, InternalServerError } from "../utils/errors.js";
+import { BadRequestError, UnauthorizedError, InternalServerError } from "../utils/errors.js";
 
 const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS) || 10;
 
@@ -22,14 +22,13 @@ class AuthService {
 
         try {
             await sendOTPEmail(email);
+            return {
+                status: 200,
+                message: "OTP sent successfully to your email"
+            };
         } catch (error) {
             throw new InternalServerError(500, "Failed to send OTP email. Please try again later.");
         }
-
-        return {
-            status: 200,
-            message: "OTP sent successfully to your email"
-        };
     }
 
     async register(body) {
@@ -40,6 +39,7 @@ class AuthService {
         }
 
         const otpRecord = findOTP(email, otp);
+
         if (!otpRecord) {
             throw new BadRequestError(400, "Invalid or expired OTP");
         }
@@ -77,12 +77,15 @@ class AuthService {
             throw new BadRequestError(400, "Email is required");
         }
 
-        await sendOTPEmail(email);
-
-        return {
-            status: 200,
-            message: "OTP sent successfully"
-        };
+        try {
+            await sendOTPEmail(email);
+            return {
+                status: 200,
+                message: "OTP sent successfully"
+            };
+        } catch (error) {
+            throw new InternalServerError(500, "Failed to send OTP email. Please try again later.");
+        }
     }
 
     async login(body, ip, userAgent) {
@@ -174,7 +177,7 @@ class AuthService {
         }
 
         try {
-            const { verifyRefreshToken, generateAccessToken } = await import("../access/access.js");
+            const { verifyRefreshToken, generateAccessToken } = await import("../utils/jwt.js");
             const decoded = verifyRefreshToken(refreshToken);
 
             const payload = {

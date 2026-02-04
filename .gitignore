@@ -1,8 +1,8 @@
 node_modules/
-.envlogs/*.txt
+.env
+logs/*.txt
 logs/*.log
 src/uploads/*
-!src/uploads/.gitkeep
 uploads/*
 !uploads/.gitkeep
 !logs/.gitkeep

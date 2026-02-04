@@ -1,16 +1,17 @@
 import { Router } from "express";
 import branchController from "../controllers/branch.js";
-import access from "../access/access.js";
+import { checkToken } from "../middleware/auth.js";
+import { roleGuard, branchAccessMiddleware } from "../middleware/authorize.js";
 import { validate, branchCreateSchema, branchUpdateSchema } from "../validation/validation.js";
 
 const router = Router();
 
 router
-    .get("/branch", access.authMiddleware, access.superadminMiddleware, branchController.getAll)
-    .get("/branch/search", access.authMiddleware, access.superadminMiddleware, branchController.search)
-    .get("/branch/:id/allinfo", access.authMiddleware, access.branchmanagerMiddleware, access.branchAccessMiddleware, branchController.allInfo)
-    .get("/branch/:id", access.authMiddleware, access.branchAccessMiddleware, branchController.getOne)
-    .post("/branch", access.authMiddleware, access.superadminMiddleware, validate(branchCreateSchema), branchController.create)
-    .put("/branch/:id", access.authMiddleware, access.superadminMiddleware, validate(branchUpdateSchema), branchController.put)
-    .delete("/branch/:id", access.authMiddleware, access.superadminMiddleware, branchController.delete)
+    .get("/branch", checkToken, roleGuard(["superadmin"]), branchController.getAll)
+    .get("/branch/search", checkToken, roleGuard(["superadmin"]), branchController.search)
+    .get("/branch/:id/allinfo", checkToken, roleGuard(["branchmanager", "superadmin"]), branchAccessMiddleware, branchController.allInfo)
+    .get("/branch/:id", checkToken, branchAccessMiddleware, branchController.getOne)
+    .post("/branch", checkToken, roleGuard(["superadmin"]), validate(branchCreateSchema), branchController.create)
+    .put("/branch/:id", checkToken, roleGuard(["superadmin"]), validate(branchUpdateSchema), branchController.put)
+    .delete("/branch/:id", checkToken, roleGuard(["superadmin"]), branchController.delete)
 export default router

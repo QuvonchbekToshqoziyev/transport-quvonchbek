@@ -25,8 +25,8 @@
               "raw": "{\n    \"email\": \"user@example.com\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/auth/send-otp",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/auth/send-otp",
+              "host": ["{{baseUrl}}"],
               "path": ["auth", "send-otp"]
             },
             "description": "Send OTP verification code to email. Required before registration."
@@ -48,8 +48,8 @@
               "raw": "{\n    \"branch\": 1,\n    \"username\": \"johndoe\",\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"birth_date\": \"1990-01-15\",\n    \"gender\": \"male\",\n    \"otp\": \"123456\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/auth/register",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
               "path": ["auth", "register"]
             },
             "description": "Register a new staff member. Requires valid OTP from email.\n\n**Body Parameters:**\n- branch (required): Branch ID\n- username (required): Unique username\n- email (required): Email address (must match OTP)\n- password (required): Password\n- birth_date (required): YYYY-MM-DD format\n- gender (required): male/female\n- otp (required): 6-digit code from email"
@@ -86,8 +86,8 @@
               "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/auth/login",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
               "path": ["auth", "login"]
             },
             "description": "Login with email and password. Returns access token and refresh token.\n\n**Body Parameters:**\n- email (required): Registered email\n- password (required): Account password\n\n**Response:**\n- accessToken: JWT for API requests (15min expiry)\n- refreshToken: Token for getting new access token"
@@ -109,8 +109,8 @@
               "raw": "{\n    \"email\": \"user@example.com\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/auth/resend-otp",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/auth/resend-otp",
+              "host": ["{{baseUrl}}"],
               "path": ["auth", "resend-otp"]
             },
             "description": "Resend OTP verification code to email. Use if previous OTP expired."
@@ -146,8 +146,8 @@
               "raw": "{\n    \"refreshToken\": \"{{refreshToken}}\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/auth/refresh",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": ["{{baseUrl}}"],
               "path": ["auth", "refresh"]
             },
             "description": "Get new access token using refresh token.\n\n**Body Parameters:**\n- refreshToken (required): Refresh token from login\n\n**Response:**\n- accessToken: New JWT for API requests"
@@ -184,8 +184,8 @@
               "raw": "{\n    \"email\": \"superadmin@transport.com\",\n    \"password\": \"SuperAdmin@123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/auth/login",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
               "path": ["auth", "login"]
             },
             "description": "Login as SuperAdmin using credentials from .env file.\n\n**Note:** SuperAdmin is configured via environment variables:\n- SUPERADMIN_EMAIL\n- SUPERADMIN_PASSWORD\n\nUpdate the body with your .env credentials."
@@ -203,8 +203,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/transport",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport",
+              "host": ["{{baseUrl}}"],
               "path": ["transport"]
             },
             "description": "Get all transports. Public endpoint - no authentication required."
@@ -216,8 +216,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/transport/search?branch=1&color=white&model=lacetti&minPrice=1000&maxPrice=50000",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport/search?branch=1&color=white&model=lacetti&minPrice=1000&maxPrice=50000",
+              "host": ["{{baseUrl}}"],
               "path": ["transport", "search"],
               "query": [
                 { "key": "branch", "value": "1", "description": "Filter by branch ID" },
@@ -236,8 +236,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/transport/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport/1",
+              "host": ["{{baseUrl}}"],
               "path": ["transport", "1"]
             },
             "description": "Get single transport by ID.\n\n**Path Parameters:**\n- id: Transport ID"
@@ -249,8 +249,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/transport/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["transport", "branch", "1"]
             },
             "description": "Get all transports for a specific branch.\n\n**Path Parameters:**\n- branchId: Branch ID"
@@ -276,8 +276,8 @@
               ]
             },
             "url": {
-              "raw": "http://localhost:5000/transport",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport",
+              "host": ["{{baseUrl}}"],
               "path": ["transport"]
             },
             "description": "Create new transport. Requires 'transports:create' permission.\n\n**Authorization:** Bearer Token\n\n**Form Data:**\n- branch (required): Branch ID\n- model (required): Transport model name\n- color (required): Transport color\n- price (required): Price in number\n- img (optional): Image file"
@@ -302,8 +302,8 @@
               ]
             },
             "url": {
-              "raw": "http://localhost:5000/transport/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport/1",
+              "host": ["{{baseUrl}}"],
               "path": ["transport", "1"]
             },
             "description": "Update transport. Requires 'transports:update' permission.\n\n**Authorization:** Bearer Token\n\n**Path Parameters:**\n- id: Transport ID\n\n**Form Data (all optional):**\n- model: Transport model name\n- color: Transport color\n- price: Price in number\n- img: New image file"
@@ -319,8 +319,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/transport/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/transport/1",
+              "host": ["{{baseUrl}}"],
               "path": ["transport", "1"]
             },
             "description": "Delete transport. Requires 'transports:delete' permission.\n\n**Authorization:** Bearer Token\n\n**Path Parameters:**\n- id: Transport ID"
@@ -342,8 +342,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/staff/me",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff/me",
+              "host": ["{{baseUrl}}"],
               "path": ["staff", "me"]
             },
             "description": "Get current authenticated user's info.\n\n**Authorization:** Bearer Token (any authenticated user)"
@@ -359,8 +359,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/staff",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff",
+              "host": ["{{baseUrl}}"],
               "path": ["staff"]
             },
             "description": "Get all staff members. Requires 'staffs:read' permission.\n\n**Authorization:** Bearer Token"
@@ -376,8 +376,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/staff/search?username=john&branch=1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff/search?username=john&branch=1",
+              "host": ["{{baseUrl}}"],
               "path": ["staff", "search"],
               "query": [
                 { "key": "username", "value": "john", "description": "Filter by username (partial match)" },
@@ -397,8 +397,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/staff/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff/1",
+              "host": ["{{baseUrl}}"],
               "path": ["staff", "1"]
             },
             "description": "Get single staff by ID. Requires 'staffs:read' permission.\n\n**Authorization:** Bearer Token\n\n**Path Parameters:**\n- id: Staff ID"
@@ -423,8 +423,8 @@
               "raw": "{\n    \"branch\": 1,\n    \"username\": \"newstaff\",\n    \"password\": \"password123\",\n    \"birth_date\": \"1995-05-20\",\n    \"gender\": \"male\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/staff",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff",
+              "host": ["{{baseUrl}}"],
               "path": ["staff"]
             },
             "description": "Create new staff member. Requires 'staffs:create' permission.\n\n**Authorization:** Bearer Token\n\n**Body Parameters:**\n- branch (required): Branch ID\n- username (required): Unique username\n- password (required): Password\n- birth_date (required): YYYY-MM-DD format\n- gender (required): male/female"
@@ -449,8 +449,8 @@
               "raw": "{\n    \"username\": \"updatedstaff\",\n    \"gender\": \"female\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/staff/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff/1",
+              "host": ["{{baseUrl}}"],
               "path": ["staff", "1"]
             },
             "description": "Update staff member. Requires 'staffs:update' permission.\n\n**Authorization:** Bearer Token\n\n**Path Parameters:**\n- id: Staff ID\n\n**Body Parameters (all optional):**\n- username: New username\n- password: New password\n- birth_date: New birth date (YYYY-MM-DD)\n- gender: New gender (male/female)"
@@ -466,8 +466,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/staff/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/staff/1",
+              "host": ["{{baseUrl}}"],
               "path": ["staff", "1"]
             },
             "description": "Delete staff member. Requires 'staffs:delete' permission.\n\n**Authorization:** Bearer Token\n\n**Path Parameters:**\n- id: Staff ID"
@@ -488,8 +488,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch",
+              "host": ["{{baseUrl}}"],
               "path": ["branch"]
             },
             "description": "Get all branches. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)"
@@ -505,8 +505,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch/search?name=main&address=city",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/search?name=main&address=city",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "search"],
               "query": [
                 { "key": "name", "value": "main", "description": "Filter by branch name (partial match)" },
@@ -526,8 +526,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "1"]
             },
             "description": "Get single branch by ID. Requires BranchManager for their branch or SuperAdmin for any branch.\n\n**Authorization:** Bearer Token (BranchManager/SuperAdmin)\n\n**Path Parameters:**\n- id: Branch ID"
@@ -552,8 +552,8 @@
               "raw": "{\n    \"name\": \"Main Branch\",\n    \"address\": \"123 Main Street, City\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/branch",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch",
+              "host": ["{{baseUrl}}"],
               "path": ["branch"]
             },
             "description": "Create new branch. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Body Parameters:**\n- name (required): Branch name\n- address (required): Branch address"
@@ -578,8 +578,8 @@
               "raw": "{\n    \"name\": \"Updated Branch Name\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "1"]
             },
             "description": "Update branch. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Branch ID\n\n**Body Parameters (all optional):**\n- name: New branch name\n- address: New branch address"
@@ -595,8 +595,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "1"]
             },
             "description": "Delete branch. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Branch ID"
@@ -617,8 +617,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/my-permissions",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/my-permissions",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "my-permissions"]
             },
             "description": "Get current user's admin permissions. Requires Admin, BranchManager, or SuperAdmin role.\n\n**Authorization:** Bearer Token (Admin+)"
@@ -634,8 +634,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin",
+              "host": ["{{baseUrl}}"],
               "path": ["admin"]
             },
             "description": "Get all admins across all branches. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)"
@@ -651,8 +651,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "branch", "1"]
             },
             "description": "Get all admins for a specific branch. Requires BranchManager for their branch or SuperAdmin.\n\n**Authorization:** Bearer Token (BranchManager/SuperAdmin)\n\n**Path Parameters:**\n- branchId: Branch ID"
@@ -668,8 +668,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "1"]
             },
             "description": "Get single admin by ID. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Admin ID"
@@ -694,8 +694,8 @@
               "raw": "{\n    \"staff\": 1,\n    \"permission_model\": \"transports\",\n    \"permission\": [\"create\", \"read\", \"update\", \"delete\"]\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/admin/promote",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/promote",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "promote"]
             },
             "description": "Promote staff to admin with specific permissions. Requires BranchManager or SuperAdmin role.\n\n**Authorization:** Bearer Token (BranchManager/SuperAdmin)\n\n**Body Parameters:**\n- staff (required): Staff ID to promote\n- permission_model (required): Model name (transports/staffs/branches)\n- permission (required): Array of permissions (create/read/update/delete)"
@@ -720,8 +720,8 @@
               "raw": "{\n    \"staff\": 1\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/admin/promote-branchmanager",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/promote-branchmanager",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "promote-branchmanager"]
             },
             "description": "Promote staff to BranchManager role. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Body Parameters:**\n- staff (required): Staff ID to promote to BranchManager"
@@ -737,8 +737,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/demote-branchmanager/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/demote-branchmanager/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "demote-branchmanager", "1"]
             },
             "description": "Demote BranchManager to regular staff. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Admin ID of the BranchManager to demote"
@@ -763,8 +763,8 @@
               "raw": "{\n    \"permission_model\": \"staffs\",\n    \"permission\": [\"read\", \"update\"]\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/admin/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "1"]
             },
             "description": "Update admin permissions. Requires BranchManager or SuperAdmin role.\n\n**Authorization:** Bearer Token (BranchManager/SuperAdmin)\n\n**Path Parameters:**\n- id: Admin ID\n\n**Body Parameters:**\n- permission_model (required): Model name (transports/staffs/branches)\n- permission (required): Array of permissions (create/read/update/delete)"
@@ -780,8 +780,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/demote/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/demote/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "demote", "1"]
             },
             "description": "Demote admin to regular staff. Requires BranchManager or SuperAdmin role.\n\n**Authorization:** Bearer Token (BranchManager/SuperAdmin)\n\n**Path Parameters:**\n- id: Admin ID to demote"
@@ -802,8 +802,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/permission/own",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/permission/own",
+              "host": ["{{baseUrl}}"],
               "path": ["permission", "own"]
             },
             "description": "Get current user's permissions. Any authenticated user can access.\n\n**Authorization:** Bearer Token (any user)"
@@ -819,8 +819,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/permission/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/permission/1",
+              "host": ["{{baseUrl}}"],
               "path": ["permission", "1"]
             },
             "description": "Get all permissions for a specific staff member. Requires appropriate access rights.\n\n**Authorization:** Bearer Token\n\n**Path Parameters:**\n- id: Staff ID"
@@ -845,8 +845,8 @@
               "raw": "{\n    \"staff\": 1,\n    \"permission_model\": \"transports\",\n    \"permission\": [\"create\", \"read\", \"update\", \"delete\"]\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/permission",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/permission",
+              "host": ["{{baseUrl}}"],
               "path": ["permission"]
             },
             "description": "Add permissions to a staff member. Requires appropriate admin rights.\n\n**Authorization:** Bearer Token\n\n**Body Parameters:**\n- staff (required): Staff ID\n- permission_model (required): Model name (transports/staffs/branches)\n- permission (required): Array of permissions (create/read/update/delete)"
@@ -871,8 +871,8 @@
               "raw": "{\n    \"staff\": 1,\n    \"permission_model\": \"transports\",\n    \"permission\": [\"read\", \"update\"]\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/permission",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/permission",
+              "host": ["{{baseUrl}}"],
               "path": ["permission"]
             },
             "description": "Update existing permissions for a staff member. Requires appropriate admin rights.\n\n**Authorization:** Bearer Token\n\n**Body Parameters:**\n- staff (required): Staff ID\n- permission_model (required): Model name (transports/staffs/branches)\n- permission (required): New array of permissions (create/read/update/delete)"
@@ -897,8 +897,8 @@
               "raw": "{\n    \"staff\": 1,\n    \"permission_model\": \"transports\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/permission",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/permission",
+              "host": ["{{baseUrl}}"],
               "path": ["permission"]
             },
             "description": "Remove all permissions of a specific model from a staff member. Requires appropriate admin rights.\n\n**Authorization:** Bearer Token\n\n**Body Parameters:**\n- staff (required): Staff ID\n- permission_model (required): Model name to remove permissions from (transports/staffs/branches)"
@@ -919,8 +919,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch",
+              "host": ["{{baseUrl}}"],
               "path": ["branch"]
             },
             "description": "Get all branches in the system. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)"
@@ -936,8 +936,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch/search?name=main",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/search?name=main",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "search"],
               "query": [
                 { "key": "name", "value": "main", "description": "Filter by branch name (partial match)" }
@@ -956,8 +956,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch/1/allinfo",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/1/allinfo",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "1", "allinfo"]
             },
             "description": "Get complete branch information including all transports and staff. Requires BranchManager for their branch or SuperAdmin.\n\n**Authorization:** Bearer Token (BranchManager/SuperAdmin)\n\n**Path Parameters:**\n- id: Branch ID\n\n**Response:** Branch object with embedded transports and staffs arrays"
@@ -982,8 +982,8 @@
               "raw": "{\n    \"name\": \"Main Branch\",\n    \"address\": \"123 Main Street, City\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/branch",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch",
+              "host": ["{{baseUrl}}"],
               "path": ["branch"]
             },
             "description": "Create a new branch. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Body Parameters:**\n- name (required): Branch name\n- address (required): Branch address"
@@ -1008,8 +1008,8 @@
               "raw": "{\n    \"name\": \"Updated Branch\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "1"]
             },
             "description": "Update branch information. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Branch ID\n\n**Body Parameters (all optional):**\n- name: New branch name\n- address: New branch address"
@@ -1025,8 +1025,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/branch/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/branch/1",
+              "host": ["{{baseUrl}}"],
               "path": ["branch", "1"]
             },
             "description": "Delete a branch. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Branch ID"
@@ -1042,8 +1042,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin",
+              "host": ["{{baseUrl}}"],
               "path": ["admin"]
             },
             "description": "Get all admins in the system. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)"
@@ -1059,8 +1059,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "1"]
             },
             "description": "Get single admin by ID. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Admin ID"
@@ -1085,8 +1085,8 @@
               "raw": "{\n    \"staff\": 1\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/admin/promote-branchmanager",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/promote-branchmanager",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "promote-branchmanager"]
             },
             "description": "Promote a staff member to BranchManager role. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Body Parameters:**\n- staff (required): Staff ID to promote to BranchManager"
@@ -1102,8 +1102,8 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/admin/demote-branchmanager/1",
-              "host": ["http://localhost:5000"],
+              "raw": "{{baseUrl}}/admin/demote-branchmanager/1",
+              "host": ["{{baseUrl}}"],
               "path": ["admin", "demote-branchmanager", "1"]
             },
             "description": "Demote a BranchManager to regular staff. Requires SuperAdmin role.\n\n**Authorization:** Bearer Token (SuperAdmin only)\n\n**Path Parameters:**\n- id: Admin ID of the BranchManager to demote"
@@ -1130,16 +1130,19 @@
   ],
   "variable": [
     {
-      "key": "base_url",
-      "value": "http://localhost:5000"
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
     },
     {
       "key": "token",
-      "value": ""
+      "value": "",
+      "type": "string"
     },
     {
       "key": "refreshToken",
-      "value": ""
+      "value": "",
+      "type": "string"
     }
   ]
 }

@@ -9,7 +9,10 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-    }
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000
 });
 
 const OTP_EXPIRY_MINUTES = 10;
@@ -40,7 +43,12 @@ export const sendOTPEmail = async (email) => {
     };
 
     try {
-        await transporter.sendMail(mailOptions);
+        const sendMailPromise = transporter.sendMail(mailOptions);
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Email sending timeout')), 15000)
+        );
+        
+        await Promise.race([sendMailPromise, timeoutPromise]);
         logger.info(`OTP sent successfully to ${email}`);
         return true;
     } catch (error) {
